@@ -42,5 +42,17 @@ INSERT INTO students (name, email, attendance) VALUES
 ('Ethan Hunt', 'ethan.hunt@example.com', '[]'),
 ('Hannah Lee', 'hannah.lee@example.com', '[]'),
 ('Michael Scott', 'michael.scott@example.com', '[]'),
-('Rachel Green', 'rachel.green@example.com', '[]');
+('Rachel Green', 'rachel.green@example.com', '[]'),
 ('Stephen Thorpe', 'stephen.thorpe@example.com', '[]');
+
+CREATE TABLE IF NOT EXISTS coursefeedback (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    CourseID VARCHAR(100) NOT NULL,
+    Feedback VARCHAR(255) DEFAULT ''
+);
+
+INSERT INTO coursefeedback (name, CourseID, Feedback) VALUES
+('Aroha Ngata', 'INFS605', 'Enjoyed the class'),
+('Tane Mahuta', 'INFS605', 'Enjoyed the class'),
+('Moana Rangi', 'COMP611', 'Enjoyed the class'),
