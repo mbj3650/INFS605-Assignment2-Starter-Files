@@ -31,7 +31,7 @@ def home():
 
 # GET all feedback
 @app.route("/coursefeedback", methods=["GET"])
-def get_feedback():
+def get_feedbacks():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute("SELECT id, name, CourseID, Feedback FROM coursefeedback ORDER BY id ASC")
