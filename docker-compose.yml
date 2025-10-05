@@ -35,7 +35,7 @@ services:
     depends_on:
       - student-db
     ports:
-      - "5001:5001"
+      - "6001:6001"
     networks:
       - microservices-net
 
