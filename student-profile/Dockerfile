@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-WORKDIR /app
+WORKDIR /app 
 
 # Install netcat (use correct package name for Debian slim)
 RUN apt-get update && \
