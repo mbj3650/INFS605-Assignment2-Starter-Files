@@ -34,7 +34,7 @@ def home():
 def get_feedbacks():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Feedback FROM coursefeedback ORDER BY id ASC")
+    cur.execute("SELECT id, name, CourseID, Feedback FROM courses ORDER BY id ASC")
     rows = cur.fetchall()
     cur.close()
     conn.close()
@@ -46,7 +46,7 @@ def get_feedbacks():
 def get_feedback(CourseID):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Feedback FROM coursefeedback WHERE CourseID=%s", (CourseID,))
+    cur.execute("SELECT id, name, CourseID, Feedback FROM courses WHERE CourseID=%s", (CourseID,))
     row = cur.fetchone()
     cur.close()
     conn.close()
@@ -64,7 +64,7 @@ def add_feedback():
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO coursefeedback (name, CourseID, Feedback) VALUES (%s, %s, %s) RETURNING id",
+        "INSERT INTO courses (name, CourseID, Feedback) VALUES (%s, %s, %s) RETURNING id",
         (data["name"], data["CourseID"], json.dumps([]))
     )
     new_id = cur.fetchone()[0]
@@ -90,7 +90,7 @@ def update_feedback(feedback_id):
     values.append(feedback_id)
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute(f"UPDATE coursefeedback SET {', '.join(fields)} WHERE id=%s RETURNING id, name, CourseID, Feedback", tuple(values))
+    cur.execute(f"UPDATE courses SET {', '.join(fields)} WHERE id=%s RETURNING id, name, CourseID, Feedback", tuple(values))
     row = cur.fetchone()
     conn.commit()
     cur.close()
@@ -104,7 +104,7 @@ def update_feedback(feedback_id):
 def delete_feedback(feedback_id):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("DELETE FROM coursefeedback WHERE id=%s RETURNING id", (feedback_id,))
+    cur.execute("DELETE FROM courses WHERE id=%s RETURNING id", (feedback_id,))
     deleted = cur.fetchone()
     conn.commit()
     cur.close()
@@ -121,7 +121,7 @@ def record_attendance(feedback_id):
         return jsonify({"error": "date and status are required"}), 400
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT feedback FROM coursefeedback WHERE id=%s", (feedback_id,))
+    cur.execute("SELECT feedback FROM courses WHERE id=%s", (feedback_id,))
     row = cur.fetchone()
     if not row:
         cur.close()
@@ -131,7 +131,7 @@ def record_attendance(feedback_id):
     attendance = row[0] or []
     attendance.append({"date": data["date"], "status": data["status"]})
 
-    cur.execute("UPDATE coursefeedback SET attendance=%s WHERE id=%s", (json.dumps(attendance), feedback_id))
+    cur.execute("UPDATE courses SET attendance=%s WHERE id=%s", (json.dumps(attendance), feedback_id))
     conn.commit()
     cur.close()
     conn.close()
