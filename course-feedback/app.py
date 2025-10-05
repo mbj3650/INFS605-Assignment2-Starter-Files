@@ -27,7 +27,7 @@ def get_connection():
 
 @app.route("/")
 def home():
-    return "Hello from student-profile service (with Postgres DB)! This is a line of text to let you know that the API service is running smoothly with full CRUD capability"
+    return "Hello from coursefeedback service (with Postgres DB)! This is a line of text to let you know that the API service is running smoothly with full CRUD capability"
 
 # GET all feedback
 @app.route("/coursefeedback", methods=["GET"])
@@ -138,4 +138,4 @@ def record_attendance(feedback_id):
     return jsonify({"id": feedback_id, "attendance": attendance}), 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=6001, debug=True)
