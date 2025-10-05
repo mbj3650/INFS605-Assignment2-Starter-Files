@@ -26,18 +26,32 @@ services:
     networks:
       - microservices-net
 
-  admin-frontend:
-    build: ./frontend
-    container_name: frontend
+  course-feedback:
+    build: ./course-feedback
+    container_name: course-feedback
+    environment:
+      DATABASE_URL: postgresql://student:password@student-db:5432/students
+      FLASK_ENV: development
+    depends_on:
+      - student-db
     ports:
-      - "3000:3000"
+      - "5001:5001"
+    networks:
+      - microservices-net
+
+
+  feedback:
+    build: ./feedback
+    container_name: feedback
+    ports:
+      - "3001:3001"
     volumes:
-      - ./frontend:/app
+      - ./feedback:/app
       - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
     depends_on:
-      - student-profile
+      - course-feedback
     networks:
       - microservices-net
 
