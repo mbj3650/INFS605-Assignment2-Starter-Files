@@ -9,6 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgres://studentuser:studentpass@student-db:5432/studentsdb")
+
 max_retries = 20
 for i in range(max_retries):
     try:
@@ -37,7 +38,7 @@ def get_feedbacks():
     rows = cur.fetchall()
     cur.close()
     conn.close()
-    feedback = [{"id": r[0], "name": r[1], "email": r[2], "attendance": r[3] or []} for r in rows]
+    feedback = [{"id": r[0], "name": r[1], "Course ID": r[2], "feedback": r[3] or []} for r in rows]
     return jsonify(feedback), 200
 
 # GET feedback by CourseID
@@ -51,20 +52,20 @@ def get_feedback(CourseID):
     conn.close()
     if not rows:
         return jsonify({"error": "Course not found"}), 404
-    feedback = [{"id": r[0], "name": r[1], "email": r[2], "attendance": r[3] or []} for r in rows]
+    feedback = [{"id": r[0], "name": r[1], "Course ID": r[2], "Feedback": r[3] or []} for r in rows]
     return jsonify(feedback), 200
 
 # POST new feedback
 @app.route("/coursefeedback", methods=["POST"])
 def add_feedback():
     data = request.get_json() or {}
-    if "name" not in data or "CourseID" not in data:
-        return jsonify({"error": "name and CourseID are required"}), 400
+    if "name" not in data or "CourseID" not in data or "Feedback" not in data:
+        return jsonify({"error": "name, CourseID and Feedback are required"}), 400
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
         "INSERT INTO courses (name, CourseID, Feedback) VALUES (%s, %s, %s) RETURNING id",
-        (data["name"], data["CourseID"], json.dumps([]))
+        (data["name"], data["CourseID"], data["Feedback"])
     )
     new_id = cur.fetchone()[0]
     conn.commit()
@@ -81,9 +82,9 @@ def update_feedback(feedback_id):
     if "name" in data:
         fields.append("name=%s")
         values.append(data["name"])
-    if "email" in data:
-        fields.append("email=%s")
-        values.append(data["email"])
+    if "CourseID" in data:
+        fields.append("CourseID=%s")
+        values.append(data["CourseID"])
     if not fields:
         return jsonify({"error": "No updatable fields provided"}), 400
     values.append(feedback_id)
@@ -111,30 +112,6 @@ def delete_feedback(feedback_id):
     if not deleted:
         return jsonify({"error": "Feedback not found"}), 404
     return jsonify({"message": "Deleted"}), 200
-
-# POST attendance record
-@app.route("/coursefeedback/<int:feedback_id>/attendance", methods=["POST"])
-def record_attendance(feedback_id):
-    data = request.get_json() or {}
-    if "date" not in data or "status" not in data:
-        return jsonify({"error": "date and status are required"}), 400
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute("SELECT feedback FROM courses WHERE id=%s", (feedback_id,))
-    row = cur.fetchone()
-    if not row:
-        cur.close()
-        conn.close()
-        return jsonify({"error": "Course not found"}), 404
-
-    attendance = row[0] or []
-    attendance.append({"date": data["date"], "status": data["status"]})
-
-    cur.execute("UPDATE courses SET attendance=%s WHERE id=%s", (json.dumps(attendance), feedback_id))
-    conn.commit()
-    cur.close()
-    conn.close()
-    return jsonify({"id": feedback_id, "attendance": attendance}), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6001, debug=True)
