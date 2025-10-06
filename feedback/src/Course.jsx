@@ -8,7 +8,7 @@ export default function App() {
     const [CourseID, setCourse] = useState('')
     const [search, setSearch] = useState('')
     const [Feedback, setFeedback] = useState('')
-
+    
   const fetchfeedback = () => {
     fetch(`${API}/coursefeedback`).then(r => r.json()).then(setCourseFeedback)
   }
@@ -17,7 +17,8 @@ export default function App() {
 
   const addfeedback = async () => {
     if (!name || !CourseID || !Feedback) return
-    const res = await fetch(`${API}/coursefeedback`, {
+    else{
+      const res = await fetch(`${API}/coursefeedback`, {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({name, CourseID, Feedback})
@@ -25,6 +26,7 @@ export default function App() {
     if (res.ok) {
       setName(''); setCourse(''); setFeedback('')
       fetchfeedback()
+    }
     }
   }
 
@@ -34,14 +36,12 @@ export default function App() {
   }
 
   const filtered = useMemo(() => coursefeedback.filter(s =>
-    s.name.toLowerCase().includes(search.toLowerCase()) ||
     s.CourseID.toLowerCase().includes(search.toLowerCase())
   ), [coursefeedback, search])
-
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
-      <h1 style={{ marginBottom: 8 }}>Admin Portal</h1>
-      <p style={{ marginTop: 0, opacity: 0.8 }}>Manage and View feedback.</p>
+      <h1 style={{ marginBottom: 8 }}>Student Portal</h1>
+      <p style={{ marginTop: 0, opacity: 0.8 }}>View and Provide course feedback.</p>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
@@ -68,9 +68,6 @@ export default function App() {
                 <div style={{ fontWeight: 600 }}>{s.name}</div>
                 <div style={{ fontSize: 14, opacity: 0.8 }}>{s.CourseID}</div>
                 <div style={{ fontSize: 14, opacity: 0.8 }}>{s.feedback}</div>
-              </div>
-              <div style={{ display: 'grid', gap: 8, justifyItems: 'end' }}>
-                <button onClick={() => deleteFeedback(s.id)} style={{ background: '#ffe5e5', border: '1px solid #f5b5b5', padding: '6px 10px', borderRadius: 8 }}>Delete</button>
               </div>
             </div>
           ))}

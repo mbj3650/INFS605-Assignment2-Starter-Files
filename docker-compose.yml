@@ -83,6 +83,20 @@ services:
     networks:
       - microservices-net
 
+  feedback-admin:
+    build: ./feedback_admin
+    container_name: feedback_admin
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./feedback_admin:/app
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      - course-feedback
+    networks:
+      - microservices-net
 networks:
   microservices-net:
     driver: bridge
