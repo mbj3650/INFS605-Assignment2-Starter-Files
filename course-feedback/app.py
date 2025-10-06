@@ -8,8 +8,7 @@ import time
 app = Flask(__name__)
 CORS(app)
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgres://studentuser:studentpass@course-db:6432/coursesdb")
-
+DATABASE_URL = os.getenv("DATABASE_URL", "postgres://studentuser:studentpass@student-db:5432/studentsdb")
 max_retries = 20
 for i in range(max_retries):
     try:
@@ -47,12 +46,12 @@ def get_feedback(CourseID):
     conn = get_connection()
     cur = conn.cursor()
     cur.execute("SELECT id, name, CourseID, Feedback FROM courses WHERE CourseID=%s", (CourseID,))
-    row = cur.fetchone()
+    rows = cur.fetchall()
     cur.close()
     conn.close()
-    if not row:
+    if not rows:
         return jsonify({"error": "Course not found"}), 404
-    feedback = {"id": row[0], "name": row[1], "CourseID": row[2], "Feedback": row[3] or []}
+    feedback = [{"id": r[0], "name": r[1], "email": r[2], "attendance": r[3] or []} for r in rows]
     return jsonify(feedback), 200
 
 # POST new feedback

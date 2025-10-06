@@ -13,6 +13,21 @@ services:
     networks:
       - microservices-net
 
+  course-db:
+    image: postgres:15
+    container_name: course-db
+    environment:
+      POSTGRES_USER: course
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: courses
+    ports:
+      - "6432:6432"
+    volumes:
+      - ./course-feedback/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microservices-net
+
+      
   student-profile:
     build: ./student-profile
     container_name: student-profile
@@ -26,25 +41,11 @@ services:
     networks:
       - microservices-net
 
-  course-db:
-    image: postgres:15
-    container_name: course-db
-    environment:
-      POSTGRES_USER: course
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: courses
-    ports:
-      - "6432:6432"
-    volumes:
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - microservices-net
-
   course-feedback:
     build: ./course-feedback
     container_name: course-feedback
     environment:
-      DATABASE_URL: postgresql://course:password@course-db:6432/courses
+      DATABASE_URL: postgresql://student:password@student-db:5432/students
     depends_on:
       - course-db
     ports:
