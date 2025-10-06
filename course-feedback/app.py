@@ -38,7 +38,7 @@ def get_feedbacks():
     rows = cur.fetchall()
     cur.close()
     conn.close()
-    feedback = [{"id": r[0], "name": r[1], "Course ID": r[2], "feedback": r[3] or []} for r in rows]
+    feedback = [{"id": r[0], "name": r[1], "CourseID": r[2], "feedback": r[3] or []} for r in rows]
     return jsonify(feedback), 200
 
 # GET feedback by CourseID
@@ -52,7 +52,7 @@ def get_feedback(CourseID):
     conn.close()
     if not rows:
         return jsonify({"error": "Course not found"}), 404
-    feedback = [{"id": r[0], "name": r[1], "Course ID": r[2], "Feedback": r[3] or []} for r in rows]
+    feedback = [{"id": r[0], "name": r[1], "CourseID": r[2], "Feedback": r[3] or []} for r in rows]
     return jsonify(feedback), 200
 
 # POST new feedback

@@ -67,7 +67,7 @@ export default function App() {
               <div>
                 <div style={{ fontWeight: 600 }}>{s.name}</div>
                 <div style={{ fontSize: 14, opacity: 0.8 }}>{s.CourseID}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Feedback}</div>
+                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.feedback}</div>
               </div>
               <div style={{ display: 'grid', gap: 8, justifyItems: 'end' }}>
                 <button onClick={() => deleteFeedback(s.id)} style={{ background: '#ffe5e5', border: '1px solid #f5b5b5', padding: '6px 10px', borderRadius: 8 }}>Delete</button>
