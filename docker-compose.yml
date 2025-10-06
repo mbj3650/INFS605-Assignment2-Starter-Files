@@ -26,14 +26,27 @@ services:
     networks:
       - microservices-net
 
+  course-db:
+    image: postgres:15
+    container_name: course-db
+    environment:
+      POSTGRES_USER: course
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: courses
+    ports:
+      - "6432:6432"
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microservices-net
+
   course-feedback:
     build: ./course-feedback
     container_name: course-feedback
     environment:
-      DATABASE_URL: postgresql://student:password@student-db:5432/students
-      FLASK_ENV: development
+      DATABASE_URL: postgresql://course:password@course-db:6432/courses
     depends_on:
-      - student-db
+      - course-db
     ports:
       - "6001:6001"
     networks:

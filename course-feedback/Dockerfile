@@ -18,4 +18,4 @@ COPY . .
 RUN chmod +x wait-for-it.sh
 
 # Start with wait-for-it
-CMD ["./wait-for-it.sh", "student-db", "5432", "python", "app.py"]
+CMD ["./wait-for-it.sh", "course-db", "6432", "python", "app.py"]
