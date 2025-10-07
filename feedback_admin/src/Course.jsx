@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 const API = 'http://localhost:6001'
 
 export default function App() {
-    const [admin, setAdmin] = useState('1')
+    const [admin, setAdmin] = useState('0')
     const [coursefeedback, setCourseFeedback] = useState([])
     const [name, setName] = useState('')
     const [Password, setPassword] = useState('')
