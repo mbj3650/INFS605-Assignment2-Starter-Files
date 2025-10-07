@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 const API = 'http://localhost:6001'
 
 export default function App() {
-    const [admin, setAdmin] = useState('')
+    const [admin, setAdmin] = useState('1')
     const [coursefeedback, setCourseFeedback] = useState([])
     const [name, setName] = useState('')
     const [Password, setPassword] = useState('')
@@ -28,6 +28,10 @@ export default function App() {
     fetchfeedback()
   }
 
+  const refreshFeedback = async (id) => {
+    fetchfeedback()
+  }
+
   const filtered = useMemo(() => coursefeedback.filter(s =>
     s.name.toLowerCase().includes(search.toLowerCase()) ||
     s.CourseID.toLowerCase().includes(search.toLowerCase())
@@ -41,13 +45,18 @@ export default function App() {
         <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
           <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
             <h2>Search</h2>
-            <input placeholder="Search by Student or Course" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '100%', padding: 8 }} />
+            <input placeholder="Search by Student or Course" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '95%', padding: 8 }} />
           </div>
         </section>
 
         
         <section style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: 1 }}>
           <h2>Feedback ({filtered.length})</h2>
+            <div style={{ display: 'grid', gap: 0, justifyItems: 'end' }}>
+              <button onClick={refreshFeedback} style={{ background: '#f3d7bdff', border: '1px solid #d5b986ff', padding: '6px 10px', borderRadius: 10 }}>Refresh feedback</button>
+            </div>
+          </div>
           <div style={{ display: 'grid', gap: 12 }}>
             {filtered.map(s => (
               <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', border: '1px solid #f2f2f2', borderRadius: 12, padding: 12 }}>

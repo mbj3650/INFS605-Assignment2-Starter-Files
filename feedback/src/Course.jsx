@@ -30,11 +30,6 @@ export default function App() {
     }
   }
 
-  const deleteFeedback = async (id) => {
-    await fetch(`${API}/coursefeedback/${id}`, { method: 'DELETE' })
-    fetchfeedback()
-  }
-
   const filtered = useMemo(() => coursefeedback.filter(s =>
     s.CourseID.toLowerCase().includes(search.toLowerCase())
   ), [coursefeedback, search])
@@ -46,15 +41,15 @@ export default function App() {
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           <h2>Add Feedback</h2>
-          <input placeholder="Full name" value={name} onChange={e=>setName(e.target.value)} style={{ width: '100%', padding: 8, marginBottom: 8 }} />
-          <input placeholder="CourseID" value={CourseID} onChange={e=>setCourse(e.target.value)} style={{ width: '100%', padding: 8, marginBottom: 8 }} />
-          <input placeholder="Feedback" value={Feedback} onChange={e=>setFeedback(e.target.value)} style={{ width: '100%', padding: 8, marginBottom: 8 }} />
+          <input placeholder="Full name" value={name} onChange={e=>setName(e.target.value)} style={{ width: '95%', padding: 8, marginBottom: 8 }} />
+          <input placeholder="CourseID" value={CourseID} onChange={e=>setCourse(e.target.value)} style={{ width: '95%', padding: 8, marginBottom: 8 }} />
+          <input placeholder="Feedback" value={Feedback} onChange={e=>setFeedback(e.target.value)} style={{ width: '95%', padding: 8, marginBottom: 8 }} />
           <button onClick={addfeedback} style={{ padding: '8px 12px' }}>Add</button>
         </div>
 
         <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           <h2>Search</h2>
-          <input placeholder="Search by Course" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '100%', padding: 8 }} />
+          <input placeholder="Search by Course" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '95%', padding: 8 }} />
         </div>
       </section>
 
