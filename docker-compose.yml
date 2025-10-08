@@ -13,21 +13,6 @@ services:
     networks:
       - microservices-net
 
-  course-db:
-    image: postgres:15
-    container_name: course-db
-    environment:
-      POSTGRES_USER: course
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: courses
-    ports:
-      - "6432:6432"
-    volumes:
-      - ./course-feedback/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - microservices-net
-
-      
   student-profile:
     build: ./student-profile
     container_name: student-profile
@@ -41,13 +26,26 @@ services:
     networks:
       - microservices-net
 
+  course-catalouge:
+    build: ./Course-Catalouge
+    container_name: Course-Catalouge
+    environment:
+      DATABASE_URL: postgresql://student:password@student-db:5432/students
+      FLASK_ENV: development
+    depends_on:
+      - student-db
+    ports:
+      - "5401:5401"
+    networks:
+      - microservices-net
+
   course-feedback:
     build: ./course-feedback
     container_name: course-feedback
     environment:
       DATABASE_URL: postgresql://student:password@student-db:5432/students
     depends_on:
-      - course-db
+      - student-db
     ports:
       - "6001:6001"
     networks:
@@ -97,6 +95,24 @@ services:
       - course-feedback
     networks:
       - microservices-net
+  
+  course-viewer:
+    build: ./CourseViewer
+    container_name: CourseViewer
+    ports:
+      - "7001:7001"
+    volumes:
+      - ./CourseViewer:/app
+      - /app/node_modules
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      - course-catalouge
+    networks:
+      - microservices-net
+
+
+
 networks:
   microservices-net:
     driver: bridge
