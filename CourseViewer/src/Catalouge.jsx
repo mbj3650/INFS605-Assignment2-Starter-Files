@@ -44,12 +44,16 @@ export default function App() {
             <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', border: '1px solid #f2f2f2', borderRadius: 12, padding: 12 }}>
               <div>
                 <div style={{ fontWeight: 600 }}>{s.name}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Course ID:</b> {s.CourseID}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Course ID:</b> {s.CourseID}</div>
+                <details style={{ fontSize: 13, marginTop: 8 }}>
+                <summary>Details</summary>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Description:</b> {s.Description}</div><br></br>
                 <div style={{ fontSize: 14, opacity: 0.8 }}><b>Points:</b> {s.Points}</div><br></br>
                 <div style={{ fontSize: 14, opacity: 0.8 }}><b>Level:</b> {s.Level}</div><br></br>
-                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Description:</b> {s.Description}</div><br></br>
+                
                 <div style={{ fontSize: 14, opacity: 0.8 }}><b>Resources:</b> {s.Resources}</div><br></br>
                 <div style={{ fontSize: 14, opacity: 0.8 }}><b>When:</b> {s.Semester}</div>
+                </details>
               </div>
             </div>
           ))}
