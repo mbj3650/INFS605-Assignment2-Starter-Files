@@ -34,7 +34,7 @@ def home():
 def get_students():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM coursecatalouge ORDER BY id ASC")
+    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM infocatalouge ORDER BY id ASC")
     rows = cur.fetchall()
     cur.close()
     conn.close()
@@ -46,7 +46,7 @@ def get_students():
 def get_student(student_id):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM coursecatalouge WHERE id=%s", (student_id,))
+    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM infocatalouge WHERE id=%s", (student_id,))
     row = cur.fetchone()
     cur.close()
     conn.close()

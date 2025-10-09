@@ -27,8 +27,8 @@ services:
       - microservices-net
 
   course-catalouge:
-    build: ./Course-Catalouge
-    container_name: Course-Catalouge
+    build: ./course-catalouge
+    container_name: course-catalouge
     environment:
       DATABASE_URL: postgresql://student:password@student-db:5432/students
       FLASK_ENV: development

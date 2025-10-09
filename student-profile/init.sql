@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS students (
 
 INSERT INTO students (name, email, attendance) VALUES
 ('Aroha Ngata', 'aroha.ngata@example.com', '[]'),
+('Student-Profile', 'aroha.ngata@example.com', '[]'),
 ('Tane Mahuta', 'tane.mahuta@example.com', '[]'),
 ('Moana Rangi', 'moana.rangi@example.com', '[]'),
 ('Wiremu Pita', 'wiremu.pita@example.com', '[]'),
@@ -44,32 +45,3 @@ INSERT INTO students (name, email, attendance) VALUES
 ('Michael Scott', 'michael.scott@example.com', '[]'),
 ('Rachel Green', 'rachel.green@example.com', '[]'),
 ('Stephen Thorpe', 'stephen.thorpe@example.com', '[]');
-
-CREATE TABLE IF NOT EXISTS courses (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    CourseID VARCHAR(100) NOT NULL,
-    Feedback VARCHAR(255) DEFAULT ''
-);
-
-INSERT INTO courses (name, CourseID, Feedback) VALUES
-('Aroha Ngata', 'INFS605', 'Enjoyed the class'),
-('Tane Mahuta', 'INFS605', 'Enjoyed the class'),
-('Moana Rangi', 'COMP611', 'Enjoyed the class');
-
-CREATE TABLE IF NOT EXISTS coursecatalouge (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    CourseID VARCHAR(100) NOT NULL,
-    Points VARCHAR(100) NOT NULL,
-    Level VARCHAR(100) NOT NULL,
-    Description VARCHAR(255) NOT NULL,
-    Resources VARCHAR(255) DEFAULT 'None Available',
-    Semester VARCHAR(255) NOT NULL,
-);
-
-INSERT INTO coursecatalouge (name, CourseID, Points, Level, Description, Resources, Semester) VALUES
-('Microservices', 'INFS605', '15.00','6', 'Microservices is a major architectural design pattern for highly available, scalable and maintainable software. This paper covers the microservices based software design and development and deployment concepts with a focus on the features and facilities of the microservices environments.', 'None Available', 'Semester 2'),
-('Algorithm Design and Analysis', 'COMP611', '15.00','6', 'Algorithmic analysis, design techniques, advanced data structures, graph algorithms, numerical algorithms.', 'None Available', 'Semester 2');
-('Computer Graphics Programming', 'COMP612', '15.00','6', 'A practical foundation in high-level computer graphics programming and a comprehensive overview of proven graphics algorithms and software techniques is presented with a focus on those techniques that have become common currency in the field of interactive computer graphics.', 'None Available', 'Semester 2');
-('Algebra and Calculus II', 'MATH605', '15.00','6', 'An introduction to multi-variable calculus together with further topics in linear algebra. Concepts and techniques central to the further study of mathematics are studied, with an emphasis on applications to science, engineering, and business.', 'None Available', 'Semester 2');

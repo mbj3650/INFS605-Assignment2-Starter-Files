@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 const API = 'http://localhost:5401'
 
 export default function App() {
-    const [coursefeedback, setCourseFeedback] = useState([])
+    const [courseinfo, setcourseinfo] = useState([])
     const [name, setName] = useState('')
     const [CourseID, setCourse] = useState('')
     const [Description, setDescription] = useState('')
@@ -15,14 +15,14 @@ export default function App() {
     
     
   const fetchfeedback = () => {
-    fetch(`${API}/Catalouge`).then(r => r.json()).then(setCourseFeedback)
+    fetch(`${API}/catalouge`).then(r => r.json()).then(setcourseinfo)
   }
 
   useEffect(() => { fetchfeedback() }, [])
 
-  const filtered = useMemo(() => coursefeedback.filter(s =>
-    s.CourseID.toLowerCase().includes(search.toLowerCase())
-  ), [coursefeedback, search])
+  const filtered = useMemo(() => courseinfo.filter(s =>
+    s.CourseID.toLowerCase().includes(search.toLowerCase()) || s.name.toLowerCase().includes(search.toLowerCase())
+  ), [courseinfo, search])
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
@@ -44,12 +44,12 @@ export default function App() {
             <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', border: '1px solid #f2f2f2', borderRadius: 12, padding: 12 }}>
               <div>
                 <div style={{ fontWeight: 600 }}>{s.name}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.CourseID}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Points}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Level}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Description}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Resources}</div>
-                <div style={{ fontSize: 14, opacity: 0.8 }}>{s.Semester}</div>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Course ID:</b> {s.CourseID}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Points:</b> {s.Points}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Level:</b> {s.Level}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Description:</b> {s.Description}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>Resources:</b> {s.Resources}</div><br></br>
+                <div style={{ fontSize: 14, opacity: 0.8 }}><b>When:</b> {s.Semester}</div>
               </div>
             </div>
           ))}
