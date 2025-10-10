@@ -1,7 +1,7 @@
 services:
-  information-db:
+  student-db:
     image: postgres:15
-    container_name: information-db
+    container_name: student-db
     environment:
       POSTGRES_USER: student
       POSTGRES_PASSWORD: password
@@ -20,7 +20,7 @@ services:
       DATABASE_URL: postgresql://student:password@student-db:5432/students
       FLASK_ENV: development
     depends_on:
-      - information-db
+      - student-db
     ports:
       - "5001:5001"
     networks:
@@ -33,7 +33,7 @@ services:
       DATABASE_URL: postgresql://student:password@student-db:5432/students
       FLASK_ENV: development
     depends_on:
-      - information-db
+      - student-db
     ports:
       - "5401:5401"
     networks:
@@ -45,7 +45,7 @@ services:
     environment:
       DATABASE_URL: postgresql://student:password@student-db:5432/students
     depends_on:
-      - information-db
+      - student-db
     ports:
       - "6001:6001"
     networks:

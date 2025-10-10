@@ -13,7 +13,19 @@ export default function App() {
     fetch(`${API}/coursefeedback`).then(r => r.json()).then(setCourseFeedback)
   }
 
+  const [time, setTime] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchfeedback();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => { fetchfeedback() }, [])
+
+  
 
   const addfeedback = async () => {
     if (!name || !CourseID || !Feedback) return

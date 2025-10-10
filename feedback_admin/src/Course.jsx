@@ -14,6 +14,14 @@ export default function App() {
     fetch(`${API}/coursefeedback`).then(r => r.json()).then(setCourseFeedback)
   }
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchfeedback();
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => { fetchfeedback() }, [])
 
   const VerifyCredentials = async () => {
