@@ -26,13 +26,13 @@ export default function App() {
 
   return (
     <div style={{ maxWidth: 900, margin: '0 auto', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
-      <h1 style={{ marginBottom: 8 }}>Student Portal</h1>
-      <p style={{ marginTop: 0, opacity: 0.8 }}>View and Provide course feedback.</p>
+      <h1 style={{ marginBottom: 8 }}>Course Viewer Portal</h1>
+      <p style={{ marginTop: 0, opacity: 0.8 }}>View course information.</p>
 
       <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           <h2>Search</h2>
-          <input placeholder="Search by Course" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '95%', padding: 8 }} />
+          <input placeholder="Search by Course name or ID" value={search} onChange={e=>setSearch(e.target.value)} style={{ width: '95%', padding: 8 }} />
         </div>
       </section>
 
