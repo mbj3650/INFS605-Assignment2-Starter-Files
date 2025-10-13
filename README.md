@@ -207,4 +207,4 @@ If you are using VirtualBox to host your application on Ubuntu you will need to 
 
 Include screenshots or screen recordings as you compose, run and test the system. Especially capture any errors you encounter and note how you resolved them.
 
-These have been included in the "Test and Walkthrough media" folder
+These have been included in the "Test and Walkthrough media" folder 
