@@ -11,6 +11,14 @@ CREATE TABLE IF NOT EXISTS students (
     attendance JSONB DEFAULT '[]'
 );
 
+CREATE TABLE IF NOT EXISTS emails (
+    id SERIAL PRIMARY KEY,
+    recipient VARCHAR(100) NOT NULL,
+    recipientemail VARCHAR(100) NOT NULL,
+    course VARCHAR(100) NOT NULL,
+    emailcontent VARCHAR(10000) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS courses (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,

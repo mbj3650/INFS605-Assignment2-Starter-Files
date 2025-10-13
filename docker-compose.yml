@@ -65,52 +65,19 @@ services:
       - student-profile
     networks:
       - microservices-net
-
-  feedback:
-    build: ./feedback
-    container_name: feedback
-    ports:
-      - "3001:3001"
-    volumes:
-      - ./feedback:/app
-      - /app/node_modules
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-    depends_on:
-      - course-feedback
-    networks:
-      - microservices-net
-
-  feedback-admin:
-    build: ./feedback_admin
-    container_name: feedback_admin
-    ports:
-      - "3333:3333"
-    volumes:
-      - ./feedback_admin:/app
-      - /app/node_modules
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
-    depends_on:
-      - course-feedback
-    networks:
-      - microservices-net
   
-  course-viewer:
-    build: ./CourseViewer
-    container_name: CourseViewer
-    ports:
-      - "7001:7001"
-    volumes:
-      - ./CourseViewer:/app
-      - /app/node_modules
+  email-sender:
+    build: ./email-service
+    container_name: email-service
     environment:
-      CHOKIDAR_USEPOLLING: "true"
+      DATABASE_URL: postgresql://student:password@student-db:5432/students
+      FLASK_ENV: development
     depends_on:
-      - course-catalouge
+      - student-db
+    ports:
+      - "7474:7474"
     networks:
       - microservices-net
-
 
 
 networks:

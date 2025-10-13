@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 const API = 'http://localhost:5001'
 const APIFeedback = 'http://localhost:6001'
 const CatalougeAPI = 'http://localhost:5401'
+const EmailAPI = 'http://localhost:7474'
 
 
 export default function App() {
@@ -15,13 +16,8 @@ export default function App() {
   const [coursefeedback, setCourseFeedback] = useState([])
   const [CourseID, setCourse] = useState('')
   const [Feedback, setFeedback] = useState('')
-  const [section, setSection] = useState('1')
+  const [section, setSection] = useState('1') //CHANGE TO SWITCH DEFAULT SITE (1 IS USUALLY DEFAULT)
   const [courseinfo, setcourseinfo] = useState([])
-  const [Description, setDescription] = useState('')
-  const [Points, setPoints] = useState('')
-  const [Level, setLevel] = useState('')
-  const [Resources, setResources] = useState('')
-  const [Semester, setSemester] = useState('')
   const [admin, setAdmin] = useState('0')
   const [Login, setLogin] = useState('')
   const [Password, setPassword] = useState('')
@@ -36,10 +32,29 @@ export default function App() {
     fetch(`${APIFeedback}/coursefeedback`).then(r => r.json()).then(setCourseFeedback)
   }
 
+  const clearAll = () => {
+    setName('')
+    setEmail('')
+    setStudents('')
+    setSearch('')
+    setAttDate('')
+    setAttStatus('')
+    setCourseFeedback('')
+    setCourse('')
+    setFeedback('')
+    setSection('')
+    setcourseinfo('')
+    setAdmin('')
+    setLogin('')
+    setPassword('')
+    setCode('')
+    settoAccess('')
+  }
+
 
   useEffect(() => { fetchStudents() }, [])
 
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       fetchfeedback();
@@ -77,9 +92,18 @@ export default function App() {
     })
     if (res.ok) {
       setName(''); setCourse(''); setFeedback('')
-      fetchfeedback()
+      fetchfeedback()   
+      const res = await fetch(`${EmailAPI}/sendemail`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name, CourseID, Feedback})
+      })
+      if (emailres.ok) {
+      }    
+
     }
   }
+
 
   const setSectionCourse = async () => {
     setSection('1')
@@ -106,6 +130,7 @@ export default function App() {
       setSection('5')
     }
   }
+
   const deleteStudent = async (id) => {
     await fetch(`${API}/students/${id}`, { method: 'DELETE' })
     fetchStudents()
@@ -164,6 +189,7 @@ export default function App() {
             <input placeholder="Password" value={Password} onChange={e=>setPassword(e.target.value)} style={{ width: '95%', padding: 8, marginBottom: 8 }} />
             <input placeholder="Security Code" value={Code} onChange={e=>setCode(e.target.value)} style={{ width: '95%', padding: 8, marginBottom: 8 }} />
             <button onClick={VerifyCredentials} style={{ padding: '8px 12px' }}>Submit Credentials</button>
+            <button onClick={setSectionCourse} style={{ marginLeft: 218, padding: '8px 6px' }}>Back</button>
           </div>
         </section>
       </div>
@@ -178,9 +204,9 @@ export default function App() {
         <section style={{ display: 'grid', gridTemplateColumns: '16fr 1fr', gap: 32, marginBottom: 24 }}>
           <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
               <button onClick={setSectionCourse} style={{ padding: '8px 6px' }}>View Course Information</button>
-              <button onClick={setSectionFeedback} style={{ padding: '8px 6px' }}>View Student Feedback</button>
-              <button onClick={setSectionAttendace} style={{ padding: '8px 6px' }}>Manage Student Attendence Rate</button>
-              <button onClick={setSectionAdminFeedback} style={{ padding: '8px 6px' }}>Manage Student Feedback</button>
+              <button onClick={setSectionFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>View Student Feedback</button>
+              <button onClick={setSectionAttendace} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Attendence Rate</button>
+              <button onClick={setSectionAdminFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Feedback</button>
           </div>
         </section>
         <h1 style={{ marginBottom: 8 }}>Admin Portal</h1>
@@ -219,15 +245,17 @@ export default function App() {
 
 
 
+
+
   else if(section == 3){
     return (
       <div style={{ maxWidth: 900, margin: '0 auto', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
         <section style={{ display: 'grid', gridTemplateColumns: '16fr 1fr', gap: 32, marginBottom: 24 }}>
           <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
               <button onClick={setSectionCourse} style={{ padding: '8px 6px' }}>View Course Information</button>
-              <button onClick={setSectionFeedback} style={{ padding: '8px 6px' }}>View Student Feedback</button>
-              <button onClick={setSectionAttendace} style={{ padding: '8px 6px' }}>Manage Student Attendence Rate</button>
-              <button onClick={setSectionAdminFeedback} style={{ padding: '8px 6px' }}>Manage Student Feedback</button>
+              <button onClick={setSectionFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>View Student Feedback</button>
+              <button onClick={setSectionAttendace} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Attendence Rate</button>
+              <button onClick={setSectionAdminFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Feedback</button>
           </div>
         </section>
         <h1 style={{ marginBottom: 8 }}>Admin Portal</h1>
@@ -295,9 +323,9 @@ export default function App() {
         <section style={{ display: 'grid', gridTemplateColumns: '16fr 1fr', gap: 32, marginBottom: 24 }}>
           <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
               <button onClick={setSectionCourse} style={{ padding: '8px 6px' }}>View Course Information</button>
-              <button onClick={setSectionFeedback} style={{ padding: '8px 6px' }}>View Student Feedback</button>
-              <button onClick={setSectionAttendace} style={{ padding: '8px 6px' }}>Manage Student Attendence Rate</button>
-              <button onClick={setSectionAdminFeedback} style={{ padding: '8px 6px' }}>Manage Student Feedback</button>
+              <button onClick={setSectionFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>View Student Feedback</button>
+              <button onClick={setSectionAttendace} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Attendence Rate</button>
+              <button onClick={setSectionAdminFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Feedback</button>
           </div>
         </section>
         <h1 style={{ marginBottom: 8 }}>Student Portal</h1>
@@ -336,15 +364,16 @@ export default function App() {
       </div>
     )
   }
+
   else{
       return (
       <div style={{ maxWidth: 900, margin: '0 auto', padding: 24, fontFamily: 'system-ui, sans-serif' }}>
          <section style={{ display: 'grid', gridTemplateColumns: '16fr 1fr', gap: 32, marginBottom: 24 }}>
           <div style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
               <button onClick={setSectionCourse} style={{ padding: '8px 6px' }}>View Course Information</button>
-              <button onClick={setSectionFeedback} style={{ padding: '8px 6px' }}>View Student Feedback</button>
-              <button onClick={setSectionAttendace} style={{ padding: '8px 6px' }}>Manage Student Attendence Rate</button>
-              <button onClick={setSectionAdminFeedback} style={{ padding: '8px 6px' }}>Manage Student Feedback</button>
+              <button onClick={setSectionFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>View Student Feedback</button>
+              <button onClick={setSectionAttendace} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Attendence Rate</button>
+              <button onClick={setSectionAdminFeedback} style={{ marginLeft: 24, padding: '8px 6px' }}>Manage Student Feedback</button>
           </div>
         </section>
         <h1 style={{ marginBottom: 8 }}>Course Viewer Portal</h1>
