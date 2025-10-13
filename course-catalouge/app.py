@@ -29,7 +29,7 @@ def get_connection():
 def home():
     return "Hello from Course-Catalouge service (with Postgres DB)! This is a line of text to let you know that the API service is running smoothly with full CRUD capability"
 
-# GET all students
+# GET all courses
 @app.route("/catalouge", methods=["GET"])
 def get_students():
     conn = get_connection()
@@ -41,17 +41,17 @@ def get_students():
     courses = [{"id": r[0], "name": r[1], "CourseID": r[2], "Points": r[3], "Level": r[4], "Description": r[5], "Resources": r[6], "Semester": r[7],} for r in rows]
     return jsonify(courses), 200
 
-# GET student by ID
+# GET course by ID
 @app.route("/catalouge/<int:course_id>", methods=["GET"])
-def get_student(student_id):
+def get_student(course_id):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM infocatalouge WHERE id=%s", (student_id,))
+    cur.execute("SELECT id, name, CourseID, Points, Level, Description, Resources, Semester FROM infocatalouge WHERE id=%s", (course_id,))
     row = cur.fetchone()
     cur.close()
     conn.close()
     if not row:
-        return jsonify({"error": "Student not found"}), 404
+        return jsonify({"error": "Course not found"}), 404
     course = [{"id": r[0], "name": r[1], "CourseID": r[2], "Points": r[3], "Level": r[4], "Description": r[5], "Resources": r[6], "Semester": r[7],} for r in rows]
     return jsonify(course), 200
 

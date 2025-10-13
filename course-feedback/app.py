@@ -46,7 +46,7 @@ def get_feedbacks():
 def get_feedback(CourseID):
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT id, name, CourseID, Feedback FROM courses WHERE CourseID=%s", (CourseID,))
+    cur.execute("SELECT id, name, CourseID, Feedback FROM courses WHERE id=%s", (CourseID,))
     rows = cur.fetchall()
     cur.close()
     conn.close()
@@ -72,32 +72,6 @@ def add_feedback():
     cur.close()
     conn.close()
     return jsonify({"id": new_id, "name": data["name"], "CourseID": data["CourseID"], "feedback": []}), 201
-
-# PUT update feedback
-@app.route("/coursefeedback/<int:feedback_id>", methods=["PUT"])
-def update_feedback(feedback_id):
-    data = request.get_json() or {}
-    fields = []
-    values = []
-    if "name" in data:
-        fields.append("name=%s")
-        values.append(data["name"])
-    if "CourseID" in data:
-        fields.append("CourseID=%s")
-        values.append(data["CourseID"])
-    if not fields:
-        return jsonify({"error": "No updatable fields provided"}), 400
-    values.append(feedback_id)
-    conn = get_connection()
-    cur = conn.cursor()
-    cur.execute(f"UPDATE courses SET {', '.join(fields)} WHERE id=%s RETURNING id, name, CourseID, Feedback", tuple(values))
-    row = cur.fetchone()
-    conn.commit()
-    cur.close()
-    conn.close()
-    if not row:
-        return jsonify({"error": "Feedback not found"}), 404
-    return jsonify({"id": row[0], "name": row[1], "CourseID": row[2], "Feedback": row[3] or []}), 200
 
 # DELETE feedback
 @app.route("/coursefeedback/<int:feedback_id>", methods=["DELETE"])

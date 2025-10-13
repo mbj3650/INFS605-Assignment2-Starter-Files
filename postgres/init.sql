@@ -72,8 +72,15 @@ INSERT INTO students (name, email, attendance) VALUES
 
 INSERT INTO courses (name, CourseID, Feedback) VALUES
 ('Aroha Ngata', 'INFS605', 'Enjoyed the class'),
+('Aroha Ngata', 'COMP611', 'Enjoyed the class'),
 ('Tane Mahuta', 'INFS605', 'Enjoyed the class'),
 ('Moana Rangi', 'COMP611', 'Enjoyed the class');
+
+INSERT INTO emails (recipient, recipientemail, course, emailcontent) VALUES
+('Aroha Ngata', 'aroha.ngata@example.com','INFS605', 'Enjoyed the class'),
+('Aroha Ngata', 'aroha.ngata@example.com','COMP611', 'Enjoyed the class'),
+('Tane Mahuta', 'tane.mahuta@example.com','INFS605', 'Enjoyed the class'),
+('Moana Rangi', 'moana.rangi@example.com','COMP611', 'Enjoyed the class');
 
 INSERT INTO infocatalouge (name, CourseID, Points, Level, Description, Resources, Semester) VALUES
 ('Needs Analysis, Acquisition and Training', 'INFS603', '15.00','6', 'Focuses on skills required to identify a user''s information technology solution requirements: to investigate and evaluate suitable solutions including software, platform and vendors, to plan the acquisition of a solution, to identify training requirements, and to plan a training programme using various delivery methods including flexible/blended delivery.', 'None Available', 'Semester 1'),

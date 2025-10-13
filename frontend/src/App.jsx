@@ -35,20 +35,11 @@ export default function App() {
   const clearAll = () => {
     setName('')
     setEmail('')
-    setStudents('')
     setSearch('')
     setAttDate('')
-    setAttStatus('')
-    setCourseFeedback('')
+    setAttStatus('Present')
     setCourse('')
     setFeedback('')
-    setSection('')
-    setcourseinfo('')
-    setAdmin('')
-    setLogin('')
-    setPassword('')
-    setCode('')
-    settoAccess('')
   }
 
 
@@ -106,12 +97,15 @@ export default function App() {
 
 
   const setSectionCourse = async () => {
+    clearAll()
     setSection('1')
   }
   const setSectionFeedback = async () => {
+    clearAll()
     setSection('2')
   }
   const setSectionAttendace = async () => {
+    clearAll()
     if(admin == '1'){
       setSection('3')
       settoAccess('3')
@@ -122,6 +116,7 @@ export default function App() {
     
   }
   const setSectionAdminFeedback = async () => {
+    clearAll()
     if(admin == '1'){
       setSection('4')
     }

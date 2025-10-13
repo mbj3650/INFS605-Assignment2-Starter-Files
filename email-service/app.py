@@ -41,6 +41,19 @@ def allemail():
     students = [{"id": r[0], "recipient": r[1], "recipientemail": r[2], "Course": r[3], "email content": r[4]} for r in rows]
     return jsonify(students), 200
 
+# GET specific students
+@app.route("/allemail/<studentname>", methods=["GET"])
+def mailspecific(studentname):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id, recipient, recipientemail, Course, emailcontent FROM emails WHERE recipient='%s' ORDER BY id ASC" % (studentname))
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    students = [{"id": r[0], "recipient": r[1], "recipientemail": r[2], "Course": r[3], "email content": r[4]} for r in rows]
+    return jsonify(students), 200
+
+
 
 # GET students by email and OUTPUT a log 
 @app.route("/sendemail", methods=["POST"])
@@ -54,8 +67,9 @@ def send_email():
     cur.execute("SELECT email FROM students WHERE name ='%s'" % (data["name"],))
     row = cur.fetchone()
     if not row:
-        return jsonify({"error": "Email not found"}), 404
-    email = row[0]
+        email = 'N/A'
+    if row:
+        email = row[0]
     print("To: %s\nThank you %s for your feedback on Course: %s!\nFeedback Message:\n%s" % (email, data["name"], data["CourseID"], data["Feedback"]),flush=True)
     cur.execute(
             "INSERT INTO emails (recipient, recipientemail, emailcontent, course) VALUES (%s, %s, %s, %s) RETURNING id",
