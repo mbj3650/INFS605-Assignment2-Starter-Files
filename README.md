@@ -7,15 +7,7 @@ Code in this repository is licensed under the [MIT License](LICENSE).
 
 Assignment instructions, diagrams, and documentation (non-code) are licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/).
 
-## Microservices Assignment Starter
-
-This repository provides a starter  application for your programming assignment in the INFS605 Microservices course (BCIS Year 2).
-
-You are provided with:
-- A `student-profile` microservice built in Flask
-- A PostgreSQL container for persistence
-- A shared `docker-compose.yml` to deploy services
-- a React (Vite) Admin user UI
+## Directory Structure
 
 INFS605-Assignment2-Starter-Files/
 ├── docker-compose.yml
@@ -61,6 +53,7 @@ INFS605-Assignment2-Starter-Files/
 ├── .gitignore
 ├── docker-compose.yml
 ├── LICENSE
+├── Arch Diagram
 └── README.md
 
 Technologies used:
@@ -68,8 +61,6 @@ Technologies used:
 - Docker + Docker Compose
 - PostgreSQL
 - React
-
-Your task is to build additional microservices, connect them using Docker Compose, and demonstrate a small, functional microservices architecture with clear service boundaries.
 
 ## The 3 microeservices Added
 
@@ -112,9 +103,7 @@ Then click 'Open' to open the repository folder in VS Code. You will see some fi
 
 Open the Readme.md file to read the instructions for this particular repository. 
 
-Option 2. Use the zip I uh
-provided in the assignment upload
-yeah
+Option 2. Use the files in the zip provided
 
 Option 3. Clone straight into your Ubuntu server or on your Virtual Machine running on VirtualBox.
 
@@ -128,7 +117,7 @@ Then type, cd INFS605-Assignment2-Starter-Files to enter the repository
 
 First, run Docker Desktop. You need Docker Desktop running on Windows (and macOS) for Docker commands like docker-compose up to work.
 
-Next, in Terminal:
+Next, with the terminal open to the Assignment2 files folder:
 
 type, docker-compose up -d --build
 
@@ -136,7 +125,7 @@ type, docker-compose up -d --build
 - APIFeedback = 'http://localhost:6001'
 - CatalougeAPI = 'http://localhost:5401'
 - EmailAPI = 'http://localhost:7474'
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:3000 [You can go here to see the website]
 
 - open http://localhost:5001/students  [to see what the contents of a json query of the database]
 
@@ -150,13 +139,7 @@ docker-compose up -d --build
 or try, docker-compose up -d
 [without the --build]
 
-### 5. Error - env: 'bash\r': No such file or directory
-
-The error message "env: 'bash\r': No such file or directory" indicates that a script is attempting to execute a shebang line that includes Windows-style carriage return characters (\r) in the interpreter path, making it an invalid path in a Unix-like environment (such as Linux or macOS). (or vice versa)
-
-Many modern text editors (like VS Code, Sublime Text, Notepad++) allow you to change the line ending format of a file from CRLF to LF and then save it.
-
-### 6. Running the System on VirtualBox
+### 5. Running the System on VirtualBox
 
 You could use the same Ubuntu server runnin on the same virtual machine you used in the INFS605 class. create a new "assignment2" folder extract the contents of the zip file or cloned repository from GitHub into your new assignment2 folder.
 
@@ -171,7 +154,7 @@ Host Port: 7474 + Guest Port: 7474
 
 If you are using VirtualBox to host your application on Ubuntu you will need to set up Port Forwarding Rules to allow your services to run on Localhost ports 5001, 5432 and 3000, 6001, 5401, 7474. 
 
-### 7. API Endpoints
+### 6. API Endpoints
 
 #### Student Profile Service (http://localhost:5001)
 - `GET /students` – list all students

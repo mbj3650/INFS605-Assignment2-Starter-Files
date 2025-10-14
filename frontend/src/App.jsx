@@ -61,6 +61,11 @@ export default function App() {
     s.CourseID.toLowerCase().includes(search.toLowerCase())
   ), [coursefeedback, search])
 
+  const filteredfeedbackadmin = useMemo(() => coursefeedback.filter(s =>
+    s.name.toLowerCase().includes(search.toLowerCase()) ||
+    s.CourseID.toLowerCase().includes(search.toLowerCase())
+  ), [coursefeedback, search])
+
   const addStudent = async () => {
     if (!name || !email) return
     const res = await fetch(`${API}/students`, {
@@ -217,10 +222,10 @@ export default function App() {
         
         <section style={{ padding: 16, border: '1px solid #eee', borderRadius: 12, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', padding: 1 }}>
-          <h2>Feedback ({filteredfeedback.length})</h2>
+          <h2>Feedback ({filteredfeedbackadmin.length})</h2>
           </div>
           <div style={{ display: 'grid', gap: 12 }}>
-            {filteredfeedback.map(s => (
+            {filteredfeedbackadmin.map(s => (
               <div key={s.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', border: '1px solid #f2f2f2', borderRadius: 12, padding: 12 }}>
                 <div>
                   <div style={{ fontWeight: 600 }}>{s.name}</div>
