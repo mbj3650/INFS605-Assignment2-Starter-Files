@@ -234,7 +234,7 @@ export default function App() {
                 </div>
                 <div style={{ display: 'grid', gap: 8, justifyItems: 'end' }}>
                   <button onClick={() => deleteFeedback(s.id)} style={{ background: '#ffe5e5', border: '1px solid #f5b5b5', padding: '6px 10px', borderRadius: 8 }}>Delete</button>
-                </div>
+                </div>  
               </div>
             ))}
           </div>
